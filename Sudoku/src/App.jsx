@@ -14,7 +14,7 @@ const App = () => {
                 <Link to="/registro">Registro</Link>
             </nav>
 
-            <main className="flex-1 p-4">
+            <main className="flex-1 p-4 w-screen border-2 border-blue-500">
                 <Routes>
                     <Route path="/" element={<Inicio />} />
                     <Route path="/jugar" element={<Juego />} />
