@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 
-function aceptarNumero(e) {
-    const numero = e.target.value;
-    if (numero >= 1 && numero <= 9) {
-        console.log(numero);
-        return numero;
-    }
-}
 
 
 const Celda = () => {
     const [numero, setNumero] = useState(null);
 
     const handleChange = (e) => {
-        const valor = e.target.value;
+        const valor = parseInt(e.target.value);
+
+        if (valor === 0) {
+            setNumero(null);
+        }
+
         if (valor >= 1 && valor <= 9) {
             setNumero(valor);
+            console.log(typeof valor);
         }
     };
 
@@ -24,10 +23,11 @@ const Celda = () => {
             <input type="text"
                 className="w-full h-full text-center focus:outline-none"
                 maxLength={1}
-                value={numero}
+                value={numero === null ? "" : numero}
                 inputMode="numeric"
                 onChange={handleChange}
             />
+
         </div>
     );
 }
