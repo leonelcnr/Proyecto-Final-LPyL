@@ -27,7 +27,6 @@ const Celda = () => {
                 inputMode="numeric"
                 onChange={handleChange}
             />
-
         </div>
     );
 }
