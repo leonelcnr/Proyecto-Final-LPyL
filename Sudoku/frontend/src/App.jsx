@@ -6,18 +6,20 @@ import Registro from './paginas/Registro.jsx';
 
 const App = () => {
     return (
-        <div className="min-h-screen flex flex-col">
-            <nav className="p-4 bg-slate-800 text-white flex gap-4">
+        <div className="h-screen flex flex-col ">
+
+            {/* <nav className="p-4 bg-slate-800 text-white flex gap-4">
                 <Link to="/">Inicio</Link>
                 <Link to="/jugar">Jugar</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/registro">Registro</Link>
-            </nav>
+                </nav> */}
 
-            <main className="flex-1 p-4 w-screen border-2 border-blue-500">
+            <main className="flex-1 p-6 w-screen h-full relative">
+                <h1 className="titulo efecto">Sudoku</h1>
                 <Routes>
                     <Route path="/" element={<Inicio />} />
-                    <Route path="/jugar" element={<Juego />} />
+                    <Route path="/jugar/:dificultad" element={<Juego />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/registro" element={<Registro />} />
                 </Routes>
