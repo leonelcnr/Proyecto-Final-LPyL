@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Sudoku;
+
 class SudokuValidador
 {
     public static function validarSudoku($sudoku): bool

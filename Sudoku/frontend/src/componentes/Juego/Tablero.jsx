@@ -1,6 +1,6 @@
 import Celda from "./Celda";
 
-const Tablero = ({ tablero, onChangeCelda }) => {
+const Tablero = ({ tablero, cambiarValorCelda, pistas }) => {
     const sudoku = tablero;
 
     return (
@@ -8,11 +8,12 @@ const Tablero = ({ tablero, onChangeCelda }) => {
             {sudoku.map((fila, indexFila) => (
                 <div key={indexFila} className="flex w-full h-full justify-center items-center">
                     {fila.map((celda, indexColumna) => (
-                        <Celda key={indexColumna}
+                        <Celda key={indexColumna + "-" + indexFila}
                             numero={celda}
                             fila={indexFila}
                             col={indexColumna}
-                            onChangeCelda={onChangeCelda}
+                            onChange={(nuevoValor) => cambiarValorCelda(indexFila, indexColumna, nuevoValor)}
+                            esPista={pistas[indexFila][indexColumna] !== 0}
                         />
                     ))}
                 </div>

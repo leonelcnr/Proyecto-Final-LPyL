@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Modelos;
+
 class Usuario
 {
     private $id;
@@ -19,6 +21,11 @@ class Usuario
         $this->contrasena = $contrasena;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -34,7 +41,7 @@ class Usuario
         return $this->email;
     }
 
-    public function getContrasena()
+    public function getPassword()
     {
         return $this->contrasena;
     }

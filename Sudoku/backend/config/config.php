@@ -17,4 +17,22 @@ spl_autoload_register(function ($class) {
     }
 });
 
+$allowedOrigin = 'http://localhost:5173'; // 👈 origen de tu React (Vite)
+
+if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] === $allowedOrigin) {
+    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+    header('Access-Control-Allow-Credentials: true');      // para sesiones/cookies
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+}
+
+// Preflight (OPTIONS)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+
 session_start(); // podria cargar guardar el usuario actual

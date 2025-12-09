@@ -1,17 +1,8 @@
 <?php
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Headers: Content-Type");
+require_once __DIR__ . '/../../config/config.php';
 
-include_once "../../src/Sudoku/SudokuGenerador.php";
+use App\Controladores\PartidaControlador;
 
-use App\Sudoku\SudokuGenerador;
-
-$dificultad = $_GET['dificultad'] ?? 'facil';
-
-$sudoku = new SudokuGenerador();
-
-$sudokuJson = $sudoku->generar($dificultad);
-
-echo json_encode($sudokuJson);
+// $controlador = new PartidaControlador();
+// $controlador->nuevaPartida();
+echo json_encode([[1, 1, 1, 0], [1, 1, 0, 1], [1, 1, 0, 1], [0, 0, 0, 0]]);

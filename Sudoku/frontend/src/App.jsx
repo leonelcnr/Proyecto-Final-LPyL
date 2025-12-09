@@ -15,8 +15,10 @@ const App = () => {
                 <Link to="/registro">Registro</Link>
                 </nav> */}
 
-            <main className="flex-1 p-6 w-screen h-full relative">
-                <h1 className="titulo efecto">Sudoku</h1>
+            <main className="flex-1 px-6 py-12 w-screen h-full relative">
+                <header>
+                    <h1 className=" min-h-12 text-4xl font-bold efecto absolute left-12">Sudoku</h1>
+                </header>
                 <Routes>
                     <Route path="/" element={<Inicio />} />
                     <Route path="/jugar/:dificultad" element={<Juego />} />
