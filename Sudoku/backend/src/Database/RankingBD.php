@@ -19,8 +19,7 @@ class RankingBD
     {
         $consulta = "SELECT *
         FROM partidas_jugadas 
-        WHERE estado = 'ganada' 
-        AND usuario_id = :usuario_id
+        WHERE usuario_id = :usuario_id
         ORDER BY 
         CASE dificultad
             WHEN 'dificil' THEN 1
@@ -45,42 +44,32 @@ class RankingBD
                 $fila['dificultad'],
                 $fila['tiempo_ms'],
                 $fila['jugada_en'],
-                $fila['estado']
             );
         }
 
         return $partidas;
     }
 
-    public function obtenerRankingGlobal(): array
+    public function obtenerRankingGlobal($dificultad): array
     {
         $consulta = "SELECT 
             p.id,
             p.usuario_id,
-            u.username     AS usuario,     -- o u.username
+            u.username     AS usuario,  
             p.dificultad,
             p.tiempo_ms,
-            p.jugada_en,
-            p.estado
+            p.jugada_en
         FROM partidas_jugadas p
         INNER JOIN usuarios u ON u.id = p.usuario_id
-        WHERE p.estado = 'ganada'
+        WHERE p.dificultad = :dificultad
         ORDER BY 
-            CASE p.dificultad
-                WHEN 'dificil' THEN 1
-                WHEN 'medio'   THEN 2
-                WHEN 'facil'   THEN 3
-                ELSE 4
-            END,
             p.tiempo_ms ASC,
             p.jugada_en ASC
         LIMIT 5";
 
         $stmt = $this->db->prepare($consulta);
-        $stmt->execute();
+        $stmt->execute(['dificultad' => $dificultad]);
 
-        // Devolvemos directamente arrays asociativos con todo:
-        // [ ['id' => ..., 'usuario_id' => ..., 'usuario' => ..., 'dificultad' => ..., ... ], ... ]
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

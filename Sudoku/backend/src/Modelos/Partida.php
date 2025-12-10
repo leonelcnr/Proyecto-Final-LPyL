@@ -9,16 +9,14 @@ class Partida
     private $dificultad;
     private $tiempo;
     private $fecha;
-    private $estado;
 
-    public function __construct($id, $usuario_id, $dificultad, $tiempo, $fecha, $estado)
+    public function __construct($id, $usuario_id, $dificultad, $tiempo, $fecha)
     {
         $this->id = $id;
         $this->usuario_id = $usuario_id;
         $this->dificultad = $dificultad;
         $this->tiempo = $tiempo;
         $this->fecha = $fecha;
-        $this->estado = $estado;
     }
 
     public function setId($id)
@@ -49,10 +47,5 @@ class Partida
     public function getFecha()
     {
         return $this->fecha;
-    }
-
-    public function getEstado()
-    {
-        return $this->estado;
     }
 }

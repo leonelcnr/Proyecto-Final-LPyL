@@ -16,7 +16,7 @@ const Celda = ({ numero, esPista, onChange }) => {
 
 
     return (
-        <div className="w-24 h-24 flex items-center justify-center  border border-black">
+        <div className="w-24 h-24 flex items-center justify-center celda">
             <input type="text"
                 className={className}
                 maxLength={1}

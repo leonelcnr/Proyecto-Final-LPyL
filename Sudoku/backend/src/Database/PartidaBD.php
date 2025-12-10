@@ -16,8 +16,8 @@ class PartidaBD
 
     public function guardarPartida(Partida $partida): Partida
     { {
-            $consulta = "INSERT INTO partidas_jugadas (usuario_id, dificultad, tiempo_ms, jugada_en, estado) 
-        VALUES (:usuario_id, :dificultad, :tiempo_ms, :jugada_en, :estado)";
+            $consulta = "INSERT INTO partidas_jugadas (usuario_id, dificultad, tiempo_ms, jugada_en) 
+        VALUES (:usuario_id, :dificultad, :tiempo_ms, :jugada_en)";
 
             $stmt = $this->bd->prepare($consulta);
             $stmt->execute([
@@ -25,7 +25,6 @@ class PartidaBD
                 'dificultad' => $partida->getDificultad(),
                 'tiempo_ms' => $partida->getTiempo(),
                 'jugada_en' => $partida->getFecha(),
-                'estado' => $partida->getEstado(), // ganada o abandonada
             ]);
 
             $partida->setId($this->bd->lastInsertId());
@@ -33,36 +32,36 @@ class PartidaBD
         }
     }
 
-    public function obtenerUltimaPartida($usuarioId): ?Partida //Devuelve la ultima partida jugada por el usuario
-    {
-        $sql = "SELECT id, usuario_id, dificultad, tiempo_ms, jugada_en, estado
-                FROM partidas_jugadas
-                WHERE usuario_id = :usuario_id
-                ORDER BY jugada_en DESC
-                LIMIT 1";
+    // public function obtenerUltimaPartida($usuarioId): ?Partida //Devuelve la ultima partida jugada por el usuario
+    // {
+    //     $sql = "SELECT id, usuario_id, dificultad, tiempo_ms, jugada_en
+    //             FROM partidas_jugadas
+    //             WHERE usuario_id = :usuario_id
+    //             ORDER BY jugada_en DESC
+    //             LIMIT 1";
 
-        $stmt = $this->bd->prepare($sql);
-        $stmt->execute(['usuario_id' => $usuarioId]);
-        $row = $stmt->fetch();
+    //     $stmt = $this->bd->prepare($sql);
+    //     $stmt->execute(['usuario_id' => $usuarioId]);
+    //     $row = $stmt->fetch();
 
-        if (!$row) return null;
+    //     if (!$row) return null;
 
-        $partida = new Partida($row['id'], $row['usuario_id'], $row['dificultad'], $row['tiempo_ms'], $row['jugada_en'], $row['estado']);
+    //     $partida = new Partida($row['id'], $row['usuario_id'], $row['dificultad'], $row['tiempo_ms'], $row['jugada_en']);
 
-        return $partida;
-    }
+    //     return $partida;
+    // }
 
-    public function marcarPartidaGanada($partidaId, $tiempoMs)
-    {
+    // public function marcarPartidaGanada($partidaId, $tiempoMs)
+    // {
 
-        $sql = "UPDATE partidas_jugadas
-            SET estado = 'ganada', tiempo_ms = :tiempo_ms
-            WHERE id = :id";
+    //     $sql = "UPDATE partidas_jugadas
+    //         SET estado = 'ganada', tiempo_ms = :tiempo_ms
+    //         WHERE id = :id";
 
-        $stmt = $this->bd->prepare($sql);
-        $stmt->execute([
-            'tiempo_ms' => $tiempoMs,
-            'id'        => $partidaId,
-        ]);
-    }
+    //     $stmt = $this->bd->prepare($sql);
+    //     $stmt->execute([
+    //         'tiempo_ms' => $tiempoMs,
+    //         'id'        => $partidaId,
+    //     ]);
+    // }
 }

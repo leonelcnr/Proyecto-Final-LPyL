@@ -18,26 +18,24 @@ class SudokuServicio
         $this->generador = new SudokuGenerador();
     }
 
-    public function iniciarPartida($usuarioId, $dificultad): array
+    public function generarPartida($dificultad)
     {
         $tablero = $this->generador->generar($dificultad);
-        $partida = new Partida(null, $usuarioId, $dificultad, 0, date('Y-m-d H:i:s'), 'abandonada');
-        $this->partidaBD->guardarPartida($partida);
         return $tablero;
     }
 
 
-    public function verificarPartida(int $usuarioId, $tablero, int $tiempo)
+    public function verificarPartida($usuarioId, $tablero, $dificultad, $tiempo)
     {
         $valido = SudokuValidador::validarSudoku($tablero);
-
 
         if (!$valido) {
             return false;
         }
 
-        $ultimaPartida = $this->partidaBD->obtenerUltimaPartida($usuarioId);
-        $this->partidaBD->marcarPartidaGanada($ultimaPartida->getId(), $tiempo);
+        $partida = new Partida(null, $usuarioId, $dificultad, $tiempo, date('Y-m-d H:i:s'));
+        // $ultimaPartida = $this->partidaBD->obtenerUltimaPartida($usuarioId);
+        $this->partidaBD->guardarPartida($partida);
 
         return true;
     }

@@ -6,7 +6,7 @@ import Registro from './paginas/Registro.jsx';
 
 const App = () => {
     return (
-        <div className="h-screen flex flex-col ">
+        <div className="h-dvh flex flex-col ">
 
             {/* <nav className="p-4 bg-slate-800 text-white flex gap-4">
                 <Link to="/">Inicio</Link>

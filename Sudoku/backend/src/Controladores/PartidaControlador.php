@@ -3,6 +3,8 @@
 namespace App\Controladores;
 
 use App\Servicios\SudokuServicio;
+use App\Modelos\Partida;
+
 
 class PartidaControlador
 {
@@ -19,9 +21,8 @@ class PartidaControlador
             return;
         }
 
-        $usuarioId = $_SESSION['usuario_id'];
         $sudokuServicio = new SudokuServicio();
-        $tablero = $sudokuServicio->iniciarPartida($usuarioId, $dificultad);
+        $tablero = $sudokuServicio->generarPartida($dificultad);
         echo json_encode($tablero);
     }
 
@@ -41,12 +42,13 @@ class PartidaControlador
         $data = json_decode($raw, true);
 
         $usuarioId = $_SESSION['usuario_id'];
+        $dificultad = $data['dificultad'] ?? '';
         $tablero = $data['tablero'] ?? '';
         $tiempo = $data['tiempo'] ?? '';
 
 
         $validador = new SudokuServicio();
-        $valido = $validador->verificarPartida($usuarioId, $tablero, $tiempo);
+        $valido = $validador->verificarPartida($usuarioId, $tablero, $dificultad, $tiempo);
 
 
         if (!$valido) {

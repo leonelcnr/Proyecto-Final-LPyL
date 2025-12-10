@@ -21,7 +21,6 @@ class RankingControlador
                 'dificultad' => $partida->getDificultad(),
                 'tiempo_ms' => $partida->getTiempo(),
                 'jugada_en' => $partida->getFecha(),
-                'estado' => $partida->getEstado(),
             ];
         }
 
@@ -31,7 +30,7 @@ class RankingControlador
     public function rankingGlobal()
     {
         $servicio  = new RankingServicio();
-        $filas = $servicio->obtenerRankingGlobal();
+        $filas = $servicio->obtenerRankingGlobal($_GET['dificultad']);
 
         $ranking = [];
         $posicion = 0;
@@ -40,11 +39,10 @@ class RankingControlador
             $posicion++;
             $ranking[] = [
                 'posicion'   => $posicion,
-                'usuario'    => $fila['usuario'],       // 👈 nombre de usuario
+                'usuario'    => $fila['usuario'],
                 'dificultad' => $fila['dificultad'],
                 'tiempo_ms'  => $fila['tiempo_ms'],
                 'jugada_en'  => $fila['jugada_en'],
-                'estado'     => $fila['estado'],
             ];
         }
 

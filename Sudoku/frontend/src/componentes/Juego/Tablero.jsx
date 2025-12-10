@@ -4,9 +4,9 @@ const Tablero = ({ tablero, cambiarValorCelda, pistas }) => {
     const sudoku = tablero;
 
     return (
-        <div className=" h-auto w-auto flex flex-col border-2 border-black">
+        <div className=" h-auto w-auto flex flex-col border-[4px] border-black">
             {sudoku.map((fila, indexFila) => (
-                <div key={indexFila} className="flex w-full h-full justify-center items-center">
+                <div key={indexFila} className="w-full h-full fila justify-center items-center">
                     {fila.map((celda, indexColumna) => (
                         <Celda key={indexColumna + "-" + indexFila}
                             numero={celda}

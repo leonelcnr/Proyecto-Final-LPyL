@@ -12,9 +12,9 @@ class RankingServicio
         return $rankingBD->obtenerRankingUsuario($usuarioId);
     }
 
-    public function obtenerRankingGlobal()
+    public function obtenerRankingGlobal($dificultad)
     {
         $rankingBD = new RankingBD();
-        return $rankingBD->obtenerRankingGlobal();
+        return $rankingBD->obtenerRankingGlobal($dificultad);
     }
 }
