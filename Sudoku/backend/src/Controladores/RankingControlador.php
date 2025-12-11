@@ -2,15 +2,21 @@
 
 namespace App\Controladores;
 
-use App\Servicios\RankingServicio;
+use App\Database\RankingBD;
 
 class RankingControlador
 {
+    private $rankingBD;
+
+    public function __construct()
+    {
+        $this->rankingBD = new RankingBD();
+    }
+
     public function rankingUsuario()
     {
         $usuarioId = $_SESSION['usuario_id'];
-        $servicio = new RankingServicio();
-        $resultado = $servicio->obtenerRankingUsuario($usuarioId);
+        $resultado = $this->rankingBD->obtenerRankingUsuario($usuarioId);
 
         $ranking = [];
         $posicion = 0;
@@ -19,7 +25,7 @@ class RankingControlador
             $ranking[] = [
                 'posicion' => $posicion,
                 'dificultad' => $partida->getDificultad(),
-                'tiempo_ms' => $partida->getTiempo(),
+                'tiempo' => $partida->getTiempo(),
                 'jugada_en' => $partida->getFecha(),
             ];
         }
@@ -29,8 +35,7 @@ class RankingControlador
 
     public function rankingGlobal()
     {
-        $servicio  = new RankingServicio();
-        $filas = $servicio->obtenerRankingGlobal($_GET['dificultad']);
+        $filas = $this->rankingBD->obtenerRankingGlobal($_GET['dificultad']);
 
         $ranking = [];
         $posicion = 0;
@@ -41,7 +46,7 @@ class RankingControlador
                 'posicion'   => $posicion,
                 'usuario'    => $fila['usuario'],
                 'dificultad' => $fila['dificultad'],
-                'tiempo_ms'  => $fila['tiempo_ms'],
+                'tiempo'  => $fila['tiempo_ms'],
                 'jugada_en'  => $fila['jugada_en'],
             ];
         }

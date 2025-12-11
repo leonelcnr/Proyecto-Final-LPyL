@@ -1,7 +1,3 @@
-// src/componentes/Ranking.jsx
-import React from "react";
-import formatearTiempo from "../utils/formatearTiempo.js";
-
 
 const claseDificultad = (dificultad) => {
     const d = (dificultad || "").toLowerCase();
@@ -17,8 +13,22 @@ const claseDificultad = (dificultad) => {
     }
 };
 
+const formatearTiempo = (tiempoMs) => {
+    const ms = Number(tiempoMs) || 0;
+    const totalSeg = Math.floor(ms / 1000);
+    const minutos = Math.floor(totalSeg / 60);
+    const segundos = totalSeg % 60;
+    const centesimas = Math.floor((ms % 1000) / 10);
+
+    return `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(
+        2,
+        "0"
+    )}.${String(centesimas).padStart(2, "0")}`;
+};
+
 const formatearFecha = (fecha) => {
     if (!fecha) return "";
+    // console.log(fecha + "fecha");
     const iso = fecha.replace(" ", "T");
     const tiempo = new Date(iso);
     const formateador = new Intl.DateTimeFormat('es-AR', {
@@ -49,16 +59,18 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
         <section className="ranking overflow-hidden flex-1">
             <header className="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-slate-100">{titulo}</h2>
-                <span className="text-xs text-slate-400 uppercase ">
-                    Mejores {partidas.length} partidas
-                </span>
+                {titulo !== "Ultima partida" && (
+                    <span className="text-xs text-slate-400 uppercase ">
+                        Mejores {partidas.length} partidas
+                    </span>
+                )}
             </header>
 
             <ul className="divide-y divide-slate-800">
                 {partidas.map((partida) => {
                     const usuario = partida.usuario == undefined ? undefined : partida.usuario;
 
-                    console.log(partida.posicion !== undefined);
+                    // console.log(partida.posicion !== undefined);
                     // cambiamos las columnas según si mostramos usuario o no
                     const gridCols = usuario !== undefined
                         ? "grid-cols-[auto,auto,1fr,auto]"
@@ -88,16 +100,16 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
                                         {String(partida.dificultad).toUpperCase()}
                                     </span>
 
-                                    {partida.tiempo_ms !== 0 && (
+                                    {partida.tiempo !== undefined && (
                                         <span className="font-mono text-sm text-slate-100">
-                                            {formatearTiempo(partida.tiempo_ms)}
+                                            {formatearTiempo(partida.tiempo)}
                                         </span>
                                     )}
                                 </div>
                             </div>
 
                             {partida.estado !== undefined && (
-                                <div className="text-xs text-slate-200 self-center">
+                                <div className="text-xs text-slate-200 self-center px-3 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wide ">
                                     {partida.estado}
                                 </div>
                             )}

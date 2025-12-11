@@ -4,10 +4,18 @@ namespace App\Controladores;
 
 use App\Servicios\SudokuServicio;
 use App\Modelos\Partida;
+use App\Database\PartidaBD;
 
 
 class PartidaControlador
 {
+    private $partidaBD;
+
+    public function __construct()
+    {
+        $this->partidaBD = new PartidaBD();
+    }
+
     public function nuevaPartida()
     {
         $dificultad = $_GET['dificultad'] ?? 'facil';
@@ -49,6 +57,7 @@ class PartidaControlador
 
         $validador = new SudokuServicio();
         $valido = $validador->verificarPartida($usuarioId, $tablero, $dificultad, $tiempo);
+
 
 
         if (!$valido) {

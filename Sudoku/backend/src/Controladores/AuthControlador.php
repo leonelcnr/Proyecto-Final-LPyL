@@ -3,9 +3,19 @@
 namespace App\Controladores;
 
 use App\Servicios\AuthServicio;
+use App\Modelos\Usuario;
+use App\Database\UsuarioBD;
 
 class AuthControlador
 {
+    private $usuarioBD;
+
+    public function __construct()
+    {
+        $this->usuarioBD = new UsuarioBD();
+    }
+
+
     public function registrar()
     {
         $raw = file_get_contents('php://input');
@@ -33,30 +43,27 @@ class AuthControlador
             return;
         }
 
-        if (strlen($password) < 8) {
-            echo json_encode([
-                'ok'      => false,
-                'mensaje' => "Password debe tener al menos 8 caracteres",
-            ]);
-            return;
-        }
-        $autentificacion = new AuthServicio();
         try {
-            $usuario = $autentificacion->registrar($nombre, $apellido, $usuario, $email, $password);
+
+            // if ($this->usuarioBD->buscarPorEmail($email)) {
+            //     throw new \RuntimeException("El email ya esta en uso");
+            // }
+
+            if ($this->usuarioBD->buscarPorUsername($usuario)) {
+                throw new \RuntimeException("El username ya esta en uso");
+            }
+
+            $usuarioObjeto = new Usuario(null, $nombre, $apellido, $usuario, $email, $password);
+            $this->usuarioBD->crear($usuarioObjeto);
+
             echo json_encode([
-                'ok'      => true,
-                'usuario' => [
-                    'id'       => $usuario->getId(),
-                    'nombre'   => $usuario->getNombre(),
-                    'apellido' => $usuario->getApellido(),
-                    'usuario' => $usuario->getUsuario(),
-                    'email'    => $usuario->getEmail(),
-                ],
+                "ok" => true,
+                "mensaje" => "Usuario registrado correctamente",
             ]);
         } catch (\RuntimeException $e) {
             echo json_encode([
-                'ok'      => false,
-                'mensaje' => $e->getMessage(),
+                "ok" => false,
+                "mensaje" => $e->getMessage(),
             ]);
         }
     }
@@ -70,9 +77,10 @@ class AuthControlador
         $usuario = htmlspecialchars(trim($data['usuario'])) ?? '';
         $password = htmlspecialchars(trim($data['password'])) ?? '';
 
+
+
         if (($usuario === '') || ($password === '')) {
             echo json_encode([
-                'ok'      => false,
                 'mensaje' => "Todos los campos son obligatorios",
             ]);
             return;
@@ -80,26 +88,59 @@ class AuthControlador
         $session_id = session_id();
         $_SESSION['session_id'] = $session_id;
 
-        $autentificacion = new AuthServicio();
         try {
-            $usuario = $autentificacion->login($usuario, $password);
-            $_SESSION['usuario_id'] = $usuario->getId();
+            $usuarioObjeto = $this->usuarioBD->buscarPorUsername($usuario);
+
+            if (!$usuarioObjeto) {
+                throw new \RuntimeException("Usuario no encontrado");
+            }
+            if ($password !== $usuarioObjeto->getPassword()) {
+                throw new \RuntimeException("Contraseña incorrecta");
+            };
+
+
+            $_SESSION['usuario_id'] = $usuarioObjeto->getId();
             echo json_encode([
-                'ok'      => true,
-                'usuario' => [
-                    'id'       => $usuario->getId(),
-                    'nombre'   => $usuario->getNombre(),
-                    'apellido' => $usuario->getApellido(),
-                    'email'    => $usuario->getEmail(),
-                    'usuario' => $usuario->getUsuario(),
-                    'session_id' => $session_id,
-                ],
+                "ok" => true,
+                "mensaje" => "Usuario logueado correctamente",
             ]);
         } catch (\RuntimeException $e) {
             echo json_encode([
-                'ok'      => false,
-                'mensaje' => $e->getMessage(),
+                "ok" => false,
+                "mensaje" => $e->getMessage(),
             ]);
         }
+    }
+
+
+    public function logout()
+    {
+        // session_start();
+
+        // 1) Vaciar el array de sesión
+        $_SESSION = [];
+
+        // 2) Borrar cookie de sesión (si se está usando cookie)
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),      // normalmente PHPSESSID
+                '',
+                time() - 42000,      // fecha en el pasado
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        // 3) Destruir la sesión en el servidor
+        session_unset();
+        session_destroy();
+
+        echo json_encode([
+            "ok" => true,
+            "mensaje" => "Sesión cerrada correctamente"
+        ]);
     }
 }

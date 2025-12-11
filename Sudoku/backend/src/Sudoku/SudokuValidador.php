@@ -4,11 +4,10 @@ namespace App\Sudoku;
 
 class SudokuValidador
 {
-    public static function validarSudoku($sudoku): bool
+    public function __construct() {}
+
+    public function validarSudoku($sudoku): bool
     {
-
-        // agregar funcion para validar si el sudoku tiene cosas incompletas
-
         // Validar que el sudoku tenga 4 filas y 4 columnas
         for ($i = 0; $i < 4; $i++) {
             for ($j = 0; $j < 4; $j++) {
@@ -32,14 +31,14 @@ class SudokuValidador
             }
         }
 
-        // hace falta comprobar los cuadrados
-        for ($boxRow = 0; $boxRow < 2; $boxRow++) {
-            for ($boxCol = 0; $boxCol < 2; $boxCol++) {
+        // comprueba los cuadrados
+        for ($subFila = 0; $subFila < 2; $subFila++) {
+            for ($subColumna = 0; $subColumna < 2; $subColumna++) {
 
                 $bloque = [];
                 for ($i = 0; $i < 2; $i++) {
                     for ($j = 0; $j < 2; $j++) {
-                        $bloque[] = $sudoku[$boxRow * 2 + $i][$boxCol * 2 + $j];
+                        $bloque[] = $sudoku[$subFila * 2 + $i][$subColumna * 2 + $j];
                     }
                 }
 

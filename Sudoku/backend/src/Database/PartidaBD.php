@@ -31,37 +31,4 @@ class PartidaBD
             return $partida;
         }
     }
-
-    // public function obtenerUltimaPartida($usuarioId): ?Partida //Devuelve la ultima partida jugada por el usuario
-    // {
-    //     $sql = "SELECT id, usuario_id, dificultad, tiempo_ms, jugada_en
-    //             FROM partidas_jugadas
-    //             WHERE usuario_id = :usuario_id
-    //             ORDER BY jugada_en DESC
-    //             LIMIT 1";
-
-    //     $stmt = $this->bd->prepare($sql);
-    //     $stmt->execute(['usuario_id' => $usuarioId]);
-    //     $row = $stmt->fetch();
-
-    //     if (!$row) return null;
-
-    //     $partida = new Partida($row['id'], $row['usuario_id'], $row['dificultad'], $row['tiempo_ms'], $row['jugada_en']);
-
-    //     return $partida;
-    // }
-
-    // public function marcarPartidaGanada($partidaId, $tiempoMs)
-    // {
-
-    //     $sql = "UPDATE partidas_jugadas
-    //         SET estado = 'ganada', tiempo_ms = :tiempo_ms
-    //         WHERE id = :id";
-
-    //     $stmt = $this->bd->prepare($sql);
-    //     $stmt->execute([
-    //         'tiempo_ms' => $tiempoMs,
-    //         'id'        => $partidaId,
-    //     ]);
-    // }
 }

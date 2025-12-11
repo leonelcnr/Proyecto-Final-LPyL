@@ -2,8 +2,6 @@
 
 namespace App\Sudoku;
 
-// include_once "SudokuValidador.php";
-
 class SudokuGenerador
 {
     private array $grid;
@@ -13,29 +11,18 @@ class SudokuGenerador
         $this->grid = array_fill(0, 4, array_fill(0, 4, 0));
     }
 
-    // $blancos = cuántas casillas vacías querés (dificultad)
     public function generar(string $dificultad): array
     {
         do {
-            // 1) Reseteo tablero
             $this->grid = array_fill(0, 4, array_fill(0, 4, 0));
-
-            // 2) Lleno diagonal
             $this->llenarDiagonal();
-
-            // 3) Intento resolver
             $resuelto = $this->resolver();
-        } while (!$resuelto); // si no se pudo, vuelvo a empezar
+        } while (!$resuelto);
 
-        // $solucion = $this->grid; si quisiera devolver todo el tablero completo
-
-        // 3) Quito celdas según dificultad
         $this->quitarCeldas($dificultad);
+        $tablero = $this->grid;
 
-        // Tablero para jugar
-        $puzzle = $this->grid;
-
-        return $puzzle;
+        return $tablero;
     }
 
 
@@ -49,6 +36,8 @@ class SudokuGenerador
         }
     }
 
+
+    // llena cajas (SubCuadrados) con numeros aleatorios de 1 a 4
     private function llenarCaja(int $filaInicio, int $colInicio): void
     {
         $nums = range(1, 4);
@@ -62,7 +51,8 @@ class SudokuGenerador
         }
     }
 
-    // Backtracking: resuelve el sudoku completo
+
+
     private function resolver(): bool
     {
         $fila = 0;
@@ -81,10 +71,10 @@ class SudokuGenerador
                 if ($this->resolver()) {
                     return true;
                 }
-                $this->grid[$fila][$col] = 0; // backtrack
+                $this->grid[$fila][$col] = 0;
             }
         }
-        return false; // no se pudo
+        return false;
     }
 
     private function buscarVacio(&$fila, &$col): bool

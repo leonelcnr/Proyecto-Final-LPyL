@@ -32,19 +32,20 @@ class UsuarioBD
         return $usuario;
     }
 
-    public function buscarPorEmail(string $email): ?Usuario
-    {
-        $sql = "SELECT id, nombre, apellido, email, username, password_hash
-                FROM usuarios
-                WHERE email = :email
-                LIMIT 1";
+    // public function buscarPorEmail(string $email): ?Usuario
+    // {
+    //     $sql = "SELECT id, nombre, apellido, email, username, password_hash
+    //             FROM usuarios
+    //             WHERE email = :email
+    //             LIMIT 1";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(['email' => $email]);
-        $row = $stmt->fetch();
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->execute(['email' => $email]);
+    //     $row = $stmt->fetch();
 
-        return $row ? $this->consultarUsuario($row) : null;
-    }
+    //     return $row ? $this->consultarUsuario($row) : null;
+    // }
+
 
     public function buscarPorUsername(string $username): ?Usuario
     {

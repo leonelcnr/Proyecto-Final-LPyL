@@ -19,6 +19,5 @@ export function useCronometro() {
     };
     const detener = () => setActivo(false);
 
-
-    return { tiempo, iniciar, detener };
+    return { tiempo, iniciar, detener, setTiempo };
 }

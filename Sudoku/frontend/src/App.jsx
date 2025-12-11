@@ -8,13 +8,6 @@ const App = () => {
     return (
         <div className="h-dvh flex flex-col ">
 
-            {/* <nav className="p-4 bg-slate-800 text-white flex gap-4">
-                <Link to="/">Inicio</Link>
-                <Link to="/jugar">Jugar</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/registro">Registro</Link>
-                </nav> */}
-
             <main className="flex-1 px-6 py-12 w-screen h-full relative">
                 <header>
                     <h1 className=" min-h-12 text-4xl font-bold efecto absolute left-12">Sudoku</h1>

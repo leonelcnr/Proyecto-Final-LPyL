@@ -11,11 +11,13 @@ class SudokuServicio
 {
     private $partidaBD;
     private $generador;
+    private $validador;
 
     public function __construct()
     {
         $this->partidaBD = new PartidaBD();
         $this->generador = new SudokuGenerador();
+        $this->validador = new SudokuValidador();
     }
 
     public function generarPartida($dificultad)
@@ -27,14 +29,13 @@ class SudokuServicio
 
     public function verificarPartida($usuarioId, $tablero, $dificultad, $tiempo)
     {
-        $valido = SudokuValidador::validarSudoku($tablero);
+        $valido = $this->validador->validarSudoku($tablero);
 
         if (!$valido) {
             return false;
         }
 
         $partida = new Partida(null, $usuarioId, $dificultad, $tiempo, date('Y-m-d H:i:s'));
-        // $ultimaPartida = $this->partidaBD->obtenerUltimaPartida($usuarioId);
         $this->partidaBD->guardarPartida($partida);
 
         return true;

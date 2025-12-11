@@ -5,7 +5,6 @@ const Login = () => {
     const navigate = useNavigate();
 
     async function hashPassword(password) {
-
         if (password === '') {
             return '';
         }
@@ -13,29 +12,27 @@ const Login = () => {
         const data = encoder.encode(password);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
-        // Convierte el hash a un string hexadecimal
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
-        data.password = await hashPassword(data.password);
-        console.log(data);
+        const datos = Object.fromEntries(formData);
+        datos.password = await hashPassword(datos.password);
+        console.log(datos);
 
-        fetch("http://localhost/Final-LPyP/Sudoku/backend/public/API/login.php", {
+        fetch("/API/login.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify(data),
+            body: JSON.stringify(datos),
         })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
                 if (data.ok) {
-                    console.log(data.usuario.usuario);
-                    sessionStorage.setItem('usuario', data.usuario.usuario);
+                    localStorage.setItem('usuario', datos.usuario);
                     navigate('/');
                 }
             })
