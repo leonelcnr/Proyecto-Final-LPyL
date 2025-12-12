@@ -171,55 +171,53 @@ const Juego = () => {
                     <Link to="/inicio" className="text-slate-100 font-bold text-2xl relative efecto" onClick={guardarPartidaActual}>Volver atras</Link>
                 </nav>
             </header>
-            <main className="grid w-full grid-cols-2  border">
-                {error && (<Error error={error} />)}
-                <form onSubmit={verificarSolucion} className="w-full flex flex-col items-center border ">
-                    <div className="colorFondo rounded-md shadow-lg w-auto h-auto p-6">
-                        <div className="p-4">
-                            <Tablero
-                                tablero={sudoku}
-                                cambiarValorCelda={cambiarValorCelda}
-                                pistas={pistas} />
-                        </div>
-                        <div className="px-4 py-2 flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase">Tiempo</span>
+            {error && (<Error error={error} />)}
+            <main className="grid w-full grid-cols-[1.2fr_1fr] justify-center items-start ">
+                <article className="colorFondo rounded-lg shadow-lg w-full h-auto p-6">
+                    <div className="flex flex-col items-center justify-center w-auto ">
+                        <form onSubmit={verificarSolucion} className="w-auto flex flex-col items-center gap-6 ">
+                            <Tablero tablero={sudoku} cambiarValorCelda={cambiarValorCelda} pistas={pistas} />
                             <Reloj tiempo={tiempo} />
-                        </div>
+                            <button type="submit" className="boton">Terminé</button>
+                        </form>
                     </div>
-                    <button type="submit" className="boton">Terminé</button>
-                </form>
-                <Ranking partidas={ranking} titulo="Tus Mejores Partidas" />
-            </main>
+                </article>
+                <aside className="w-full px-10">
+                    <Ranking partidas={ranking} titulo="Tus Mejores Partidas" />
+                </aside>
+            </main >
 
 
             {/* Modal de victoria */}
-            {victoria && (
-                <Modal
-                    estaAbierto={victoria}
-                    titulo="¡Has ganado!">
-                    <div className="text-center w-[70vw] px-6 py-4 flex flex-col items-center gap-2">
-                        <p className="text-slate-100">
-                            ¡Felicidades! Has completado el Sudoku correctamente.
-                        </p>
-                        <p className="text-sm text-slate-400">Tu tiempo fue:</p>
-                        <div className="font-mono text-lg text-blue-300">
-                            <Reloj tiempo={tiempo} />
+            {
+                victoria && (
+                    <Modal
+                        estaAbierto={victoria}
+                        titulo="¡Has ganado!">
+                        <div className="text-center w-[70vw] px-6 py-4 flex flex-col items-center gap-2">
+                            <p className="text-slate-100">
+                                ¡Felicidades! Has completado el Sudoku correctamente.
+                            </p>
+                            <p className="text-sm text-slate-400">Tu tiempo fue:</p>
+                            <div className="font-mono text-lg text-blue-300 w-[20vw]">
+                                <Reloj tiempo={tiempo} />
+                            </div>
+                            <div className="w-full flex justify-center">
+                                <Ranking partidas={rankingGlobal} titulo={`Ranking ${dificultad}`} />
+                            </div>
+                            <div className="space-x-7 space-y-8">
+                                <button className="boton" onClick={() => { navigate("/inicio") }}>Volver Inicio</button>
+                                <button className="boton" onClick={() => {
+                                    setVictoria(false);
+                                    cargar_sudoku();
+                                    sessionStorage.removeItem(`sudoku-${dificultad}`);
+                                }}>Nueva Partida</button>
+                            </div>
                         </div>
-                        <div className="w-full flex justify-center">
-                            <Ranking partidas={rankingGlobal} titulo={`Ranking ${dificultad}`} />
-                        </div>
-                        <div className="space-x-7 space-y-8">
-                            <button className="boton" onClick={() => { navigate("/inicio") }}>Volver Inicio</button>
-                            <button className="boton" onClick={() => {
-                                setVictoria(false);
-                                cargar_sudoku();
-                                sessionStorage.removeItem(`sudoku-${dificultad}`);
-                            }}>Nueva Partida</button>
-                        </div>
-                    </div>
-                </Modal>
-            )}
-        </section>
+                    </Modal>
+                )
+            }
+        </section >
     );
 };
 

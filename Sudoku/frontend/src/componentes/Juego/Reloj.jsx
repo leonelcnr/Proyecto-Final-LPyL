@@ -13,8 +13,9 @@ const Reloj = ({ tiempo }) => {
 
 
     return (
-        <div>
-            <p>{mm}:{ss}.{cs}</p>
+        <div className=" w-full bg-zinc-800 px-4 py-2 flex items-center justify-between shadow-lg rounded-md">
+            <span className="text-md font-semibold uppercase ">Tiempo</span>
+            <p className="text-md font-semibold">{mm}:{ss}.{cs}</p>
         </div>
     );
 };
