@@ -1,8 +1,11 @@
 import AuthLayout from "../componentes/auth/Formulario";
 import { useNavigate } from "react-router-dom";
+import Error from "../componentes/Error";
+import { useState } from "react";
 
 const Login = () => {
     const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     async function hashPassword(password) {
         if (password === '') {
@@ -33,7 +36,9 @@ const Login = () => {
                 console.log(data);
                 if (data.ok) {
                     localStorage.setItem('usuario', datos.usuario);
-                    navigate('/');
+                    navigate('/inicio');
+                } else {
+                    setError(data.mensaje);
                 }
             })
             .catch((err) => console.log(err));
@@ -41,6 +46,7 @@ const Login = () => {
 
     return (
         <AuthLayout>
+            {error && (<Error error={error} />)}
             <form onSubmit={handleSubmit} className="h-auto w-[400px] items-center flex flex-col justify-center p-6 gap-4">
                 <h2 className="w-max text-2xl font-bold efecto relative">Inicio sesion</h2>
                 <input name="usuario" className="input-formulario w-72 md:w-full" type="text" placeholder="Usuario" />

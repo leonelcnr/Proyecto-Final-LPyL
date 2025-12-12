@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/API": {
-        target: "http://localhost/Final-LPyP/Sudoku/backend/public",
+        target: "http://localhost/Proyecto-Final-LPyL/Sudoku/backend/public",
         changeOrigin: true,
       },
     },

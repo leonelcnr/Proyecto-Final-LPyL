@@ -13,9 +13,9 @@ const App = () => {
                     <h1 className=" min-h-12 text-4xl font-bold efecto absolute left-12">Sudoku</h1>
                 </header>
                 <Routes>
-                    <Route path="/" element={<Inicio />} />
+                    <Route path="/" element={<Login />} />
+                    <Route path="/inicio" element={<Inicio />} />
                     <Route path="/jugar/:dificultad" element={<Juego />} />
-                    <Route path="/login" element={<Login />} />
                     <Route path="/registro" element={<Registro />} />
                 </Routes>
             </main>

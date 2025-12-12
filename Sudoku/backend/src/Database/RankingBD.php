@@ -18,7 +18,7 @@ class RankingBD
     public function obtenerRankingUsuario($usuarioId)
     {
         $consulta = "SELECT *
-        FROM partidas_jugadas 
+        FROM partidas_ganadas 
         WHERE usuario_id = :usuario_id
         ORDER BY 
         CASE dificultad
@@ -55,11 +55,11 @@ class RankingBD
         $consulta = "SELECT 
             p.id,
             p.usuario_id,
-            u.username     AS usuario,  
+            u.usuario     AS usuario,  
             p.dificultad,
             p.tiempo_ms,
             p.jugada_en
-        FROM partidas_jugadas p
+        FROM partidas_ganadas p
         INNER JOIN usuarios u ON u.id = p.usuario_id
         WHERE p.dificultad = :dificultad
         ORDER BY 

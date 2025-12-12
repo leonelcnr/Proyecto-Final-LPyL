@@ -32,7 +32,7 @@ const Registro = () => {
             .then((data) => {
                 if (data.ok) {
 
-                    navigate('/login');
+                    navigate('/');
                 }
                 if (!data.ok) {
                     setError(data.mensaje);

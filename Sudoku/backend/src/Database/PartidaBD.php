@@ -16,7 +16,7 @@ class PartidaBD
 
     public function guardarPartida(Partida $partida): Partida
     { {
-            $consulta = "INSERT INTO partidas_jugadas (usuario_id, dificultad, tiempo_ms, jugada_en) 
+            $consulta = "INSERT INTO partidas_ganadas (usuario_id, dificultad, tiempo_ms, jugada_en) 
         VALUES (:usuario_id, :dificultad, :tiempo_ms, :jugada_en)";
 
             $stmt = $this->bd->prepare($consulta);

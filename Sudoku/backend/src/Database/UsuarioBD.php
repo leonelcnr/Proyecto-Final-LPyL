@@ -16,14 +16,14 @@ class UsuarioBD
 
     public function crear(Usuario $usuario): Usuario
     {
-        $sql = "INSERT INTO usuarios (nombre, apellido, email, username, password_hash)
-                VALUES (:nombre, :apellido, :email, :username, :password_hash)";
+        $sql = "INSERT INTO usuarios (nombre, apellido, email, usuario, password_hash)
+                VALUES (:nombre, :apellido, :email, :usuario, :password_hash)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'nombre'        => $usuario->getNombre(),
             'apellido'      => $usuario->getApellido(),
-            'username'      => $usuario->getUsuario(),
+            'usuario'      => $usuario->getUsuario(),
             'email'         => $usuario->getEmail(),
             'password_hash' => $usuario->getPassword(),
         ]);
@@ -49,13 +49,13 @@ class UsuarioBD
 
     public function buscarPorUsername(string $username): ?Usuario
     {
-        $sql = "SELECT id, nombre, apellido, email, username, password_hash
+        $sql = "SELECT id, nombre, apellido, email, usuario, password_hash
                 FROM usuarios
-                WHERE username = :username
+                WHERE usuario = :usuario
                 LIMIT 1";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['username' => $username]);
+        $stmt->execute(['usuario' => $username]);
         $row = $stmt->fetch();
 
         return $row ? $this->consultarUsuario($row) : null;
@@ -63,7 +63,7 @@ class UsuarioBD
 
     private function consultarUsuario(array $row): Usuario
     {
-        $u = new Usuario($row['id'], $row['nombre'], $row['apellido'], $row['username'], $row['email'], $row['password_hash']);
+        $u = new Usuario($row['id'], $row['nombre'], $row['apellido'], $row['usuario'], $row['email'], $row['password_hash']);
         return $u;
     }
 }

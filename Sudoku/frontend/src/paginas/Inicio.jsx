@@ -61,7 +61,7 @@ const Inicio = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                navegador('/login');
+                navegador('/');
             })
             .catch((err) => console.log(err));
 
@@ -85,7 +85,7 @@ const Inicio = () => {
                     <div>
                         <Ranking partidas={ultimaPartida} titulo="Última partida" />
                     </div>
-                    <div className=" h-2/3 border">
+                    <div className=" h-2/3">
                         <Ranking partidas={rankingUsuario} titulo="Mejores Partidas" />
                     </div>
                 </div>

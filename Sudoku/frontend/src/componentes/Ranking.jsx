@@ -46,10 +46,10 @@ const formatearFecha = (fecha) => {
 const Ranking = ({ partidas, titulo = "Ranking" }) => {
     if (!partidas || partidas.length === 0) {
         return (
-            <section className="ranking">
-                <h2 className="text-xl font-semibold text-slate-100 mb-2">{titulo}</h2>
+            <section className="ranking p-6">
+                <h2 className="text-xl font-semibold text-slate-100 mb-2 ">{titulo}</h2>
                 <p className="text-sm text-slate-400">
-                    Todavía no hay partidas para mostrar.
+                    Todavía no hay partidas para mostrar
                 </p>
             </section>
         );
@@ -88,7 +88,7 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
 
                             {usuario !== undefined && (
                                 <div className="text-xs sm:text-sm text-slate-200 self-center truncate max-w-[120px]">
-                                    {usuario.toUpperCase()}
+                                    {usuario}
                                 </div>
                             )}
 

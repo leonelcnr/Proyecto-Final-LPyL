@@ -18,6 +18,10 @@ export function useCronometro() {
         setActivo(true);
     };
     const detener = () => setActivo(false);
+    const reiniciar = () => {
+        setTiempo(0);
+        iniciar();
+    };
 
-    return { tiempo, iniciar, detener, setTiempo };
+    return { tiempo, iniciar, detener, setTiempo, reiniciar };
 }
