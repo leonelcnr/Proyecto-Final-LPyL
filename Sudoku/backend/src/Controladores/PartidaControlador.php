@@ -3,7 +3,6 @@
 namespace App\Controladores;
 
 use App\Servicios\SudokuServicio;
-use App\Modelos\Partida;
 use App\Database\PartidaBD;
 
 

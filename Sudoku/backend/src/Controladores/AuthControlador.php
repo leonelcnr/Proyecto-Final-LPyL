@@ -2,7 +2,6 @@
 
 namespace App\Controladores;
 
-use App\Servicios\AuthServicio;
 use App\Modelos\Usuario;
 use App\Database\UsuarioBD;
 
@@ -44,10 +43,6 @@ class AuthControlador
         }
 
         try {
-
-            // if ($this->usuarioBD->buscarPorEmail($email)) {
-            //     throw new \RuntimeException("El email ya esta en uso");
-            // }
 
             if ($this->usuarioBD->buscarPorUsername($usuario)) {
                 throw new \RuntimeException("El username ya esta en uso");

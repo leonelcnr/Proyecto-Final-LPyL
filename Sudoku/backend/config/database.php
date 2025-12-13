@@ -1,12 +1,11 @@
 <?php
-// config/database.php
 
 return [
     'driver'   => 'mysql',
-    'host'     => 'localhost',   // o 'localhost'
+    'host'     => 'localhost',
     'port'     => 3306,
-    'dbname'   => 'sudoku',      // nombre de tu base de datos
-    'username' => 'root',        // usuario de MySQL
-    'password' => '',            // contraseña (vacía en XAMPP por defecto)
+    'dbname'   => 'sudoku',
+    'username' => 'root',
+    'password' => '',
     'charset'  => 'utf8mb4',
 ];

@@ -1,5 +1,5 @@
 <?php
-// src/Database/Conexion.php
+
 namespace App\Database;
 
 use PDO;
@@ -16,7 +16,7 @@ class Conexion
             return self::$pdo;
         }
 
-        // Leemos la configuración
+        // configuracion de la base de datos
         $config = require BASE_PATH . '/config/database.php';
 
         $driver   = $config['driver'];
@@ -27,21 +27,19 @@ class Conexion
         $username = $config['username'];
         $password = $config['password'];
 
-        // Creamos el DSN
         $dsn = "{$driver}:host={$host};port={$port};dbname={$dbname};charset={$charset}";
 
         try {
             self::$pdo = new PDO($dsn, $username, $password, [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // errores como excepciones
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // fetch en arrays asociativos
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);
         } catch (PDOException $e) {
-            // En un TP está bien tirar el error así; en prod se loguea y se muestra mensaje genérico
             http_response_code(500);
             echo json_encode([
                 'ok'      => false,
                 'mensaje' => 'Error de conexión a la base de datos',
-                'error'   => $e->getMessage(), // podés quitar esto si no querés mostrar detalles
+                'error'   => $e->getMessage(),
             ]);
             exit;
         }

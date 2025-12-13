@@ -8,7 +8,6 @@ ini_set('display_errors', 1);
 define('BASE_PATH', dirname(__DIR__));
 
 spl_autoload_register(function ($class) {
-    // Ej: App\Controladores\NuevoSudokuControlador
     $class = str_replace('App\\', '', $class);
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
     $file  = BASE_PATH . '/src/' . $class . '.php';
@@ -34,12 +33,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
-// session_set_cookie_params([
-//     'lifetime' => 0,          // hasta cerrar el navegador
-//     'path'     => '/',
-//     'domain'   => '',         // o tu dominio si aplica
-//     'secure'   => false,      // true si usás HTTPS
-//     'httponly' => true,
-//     'samesite' => 'Lax',
-// ]);
-session_start(); // podria cargar guardar el usuario actual
+
+session_start(); // podria usarlo para cargar guardar el usuario actual
