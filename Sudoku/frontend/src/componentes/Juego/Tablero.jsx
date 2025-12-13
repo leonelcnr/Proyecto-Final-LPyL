@@ -12,7 +12,7 @@ const Tablero = ({ tablero, cambiarValorCelda, pistas }) => {
                             numero={celda}
                             fila={indexFila}
                             col={indexColumna}
-                            onChange={(nuevoValor) => cambiarValorCelda(indexFila, indexColumna, nuevoValor)}
+                            cambioNumero={(nuevoValor) => cambiarValorCelda(indexFila, indexColumna, nuevoValor)}
                             esPista={pistas[indexFila][indexColumna] !== 0}
                         />
                     ))}

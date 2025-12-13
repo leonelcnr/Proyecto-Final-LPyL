@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/API": {
+      "/Peticiones": {
         target: "http://localhost/Proyecto-Final-LPyL/Sudoku/backend/public",
         changeOrigin: true,
       },

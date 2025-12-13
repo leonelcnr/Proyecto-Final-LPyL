@@ -63,7 +63,7 @@ class PartidaControlador
         if (!$valido) {
             echo json_encode([
                 'valido'      => false,
-                'mensaje' => "Tablero inválido",
+                'mensaje' => "El tablero no es válido, vuelve a intentarlo",
             ]);
             return;
         }

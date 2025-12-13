@@ -24,11 +24,11 @@ const Juego = () => {
     const [ranking, setRanking] = useState([]);
 
 
-    // hago una peticion para obtener un nuevo sudoku
+    // funcion para cargar un nuevo sudoku
     const cargar_sudoku = async () => {
         setCargando(true);
         setError(null);
-        const response = await fetch(`/API/nueva-partida.php?dificultad=${dificultad}`, {
+        const response = await fetch(`/Peticiones/nueva-partida.php?dificultad=${dificultad}`, {
             method: "GET",
             credentials: "include",
         });
@@ -73,7 +73,7 @@ const Juego = () => {
     }, [dificultad, victoria]);
 
 
-    // cambia el valor de la celda, si es una pista no se puede cambiar
+    // cambia el valor de la celda, utiliza setSudoku para actualizar el estado del tablero
     const cambiarValorCelda = (fila, col, nuevoValor) => {
         setSudoku((prev) =>
             prev.map((filaArr, i) =>
@@ -84,17 +84,17 @@ const Juego = () => {
         );
     };
 
-    // envio el tablero al back para verificar si es correcto
+
+    // funcion para enviar la solucion al back y verificar si es correcta
     const verificarSolucion = async (e) => {
         e.preventDefault();
         detener();
-        // deberia detener el tiempo ahora o despues?
         const datos = {
             tablero: sudoku,
             dificultad: dificultad,
             tiempo: tiempo,
         };
-        const res = await fetch("/API/verificar-solucion.php",
+        const res = await fetch("/Peticiones/verificar-solucion.php",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -102,21 +102,20 @@ const Juego = () => {
                 credentials: "include",
             });
         const data = await res.json();
-
         if (data.valido) {
             mostrarRankingGlobal();
             sessionStorage.removeItem(`sudoku-${dificultad}`);
             setVictoria(true);
-
         } else {
             iniciar();
             setError(data.mensaje);
         }
     };
 
+
     // peticion para obtener el ranking del usuario
     useEffect(() => {
-        fetch(`/API/rankingUsuario.php?dificultad=${dificultad}`, {
+        fetch(`/Peticiones/rankingUsuario.php?dificultad=${dificultad}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -128,6 +127,7 @@ const Juego = () => {
             .catch((err) => console.log(err));
     }, []);
 
+
     // si hay un error, lo muestro por 5 segundos
     useEffect(() => {
         if (error) {
@@ -135,15 +135,15 @@ const Juego = () => {
         }
     }, [error]);
 
-    // // guardo la partida actual en el session storage
-    const guardarPartidaActual = () => {
+    // funcion para borrar la partida actual en el session storage
+    const borrarPartidaActual = () => {
         sessionStorage.removeItem(`sudoku-${dificultad}`);
     };
 
 
     // peticion para obtener el ranking global
     const mostrarRankingGlobal = () => {
-        fetch(`/API/rankingGlobal.php?dificultad=${dificultad}`, {
+        fetch(`/Peticiones/rankingGlobal.php?dificultad=${dificultad}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -166,19 +166,19 @@ const Juego = () => {
 
     return (
         <section className="w-full h-full flex-1 flex flex-col items-center px-4">
-            <header className="w-full min-h-12 px-12 flex items-center justify-end mb-6">
+            <header className="w-full min-h-12 px-12 flex items-center justify-end mb-10">
                 <nav className="flex items-center gap-4">
-                    <Link to="/inicio" className="text-slate-100 font-bold text-2xl relative efecto" onClick={guardarPartidaActual}>Volver atras</Link>
+                    <Link to="/inicio" className="text-slate-100 font-bold text-2xl relative efecto" onClick={borrarPartidaActual}>Volver atras</Link>
                 </nav>
             </header>
             {error && (<Error error={error} />)}
-            <main className="grid w-full grid-cols-[1.2fr_1fr] justify-center items-start ">
+            <main className="grid w-full grid-cols-[1.2fr_1fr] justify-center items-start h-full">
                 <article className="colorFondo rounded-lg shadow-lg w-full h-auto p-6">
                     <div className="flex flex-col items-center justify-center w-auto ">
                         <form onSubmit={verificarSolucion} className="w-auto flex flex-col items-center gap-6 ">
                             <Tablero tablero={sudoku} cambiarValorCelda={cambiarValorCelda} pistas={pistas} />
                             <Reloj tiempo={tiempo} />
-                            <button type="submit" className="boton">Terminé</button>
+                            <button type="submit" className="boton disabled:opacity-40 cursor-not-allowed" disabled={sudoku.some(fila => fila.some(celda => celda === 0))}>Terminé</button>
                         </form>
                     </div>
                 </article>

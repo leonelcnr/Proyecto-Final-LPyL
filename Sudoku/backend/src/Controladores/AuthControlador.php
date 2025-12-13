@@ -115,18 +115,14 @@ class AuthControlador
 
     public function logout()
     {
-        // session_start();
-
-        // 1) Vaciar el array de sesión
         $_SESSION = [];
 
-        // 2) Borrar cookie de sesión (si se está usando cookie)
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(
-                session_name(),      // normalmente PHPSESSID
+                session_name(),
                 '',
-                time() - 42000,      // fecha en el pasado
+                time() - 42000,
                 $params["path"],
                 $params["domain"],
                 $params["secure"],

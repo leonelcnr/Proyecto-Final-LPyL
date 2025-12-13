@@ -15,6 +15,13 @@ class RankingControlador
 
     public function rankingUsuario()
     {
+
+        if (!isset($_SESSION['usuario_id'])) {
+            http_response_code(401);
+            echo json_encode(['mensaje' => 'No autenticado']);
+            exit;
+        }
+
         $usuarioId = $_SESSION['usuario_id'];
         $resultado = $this->rankingBD->obtenerRankingUsuario($usuarioId);
 

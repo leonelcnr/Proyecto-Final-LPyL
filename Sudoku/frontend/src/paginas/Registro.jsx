@@ -21,9 +21,8 @@ const Registro = () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         data.password = await hashPassword(data.password);
-        console.log(data);
 
-        fetch("/API/register.php", {
+        fetch("/Peticiones/register.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -31,7 +30,6 @@ const Registro = () => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.ok) {
-
                     navigate('/');
                 }
                 if (!data.ok) {
@@ -55,7 +53,7 @@ const Registro = () => {
                 <input name="password" className="input-formulario" type="password" placeholder="Contraseña" required />
                 <button className="w-full" type="submit">Registrarse</button>
             </form>
-            <a onClick={() => navigate('/login')}>¿Ya tienes cuenta?</a>
+            <a onClick={() => navigate('/')}>¿Ya tienes cuenta?</a>
         </AuthLayout>
     );
 };

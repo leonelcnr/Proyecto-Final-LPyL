@@ -25,7 +25,7 @@ const Login = () => {
         datos.password = await hashPassword(datos.password);
         console.log(datos);
 
-        fetch("/API/login.php", {
+        fetch("/Peticiones/login.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

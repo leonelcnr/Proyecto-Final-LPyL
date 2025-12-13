@@ -100,6 +100,7 @@
 		outline-none
 		cursor-pointer
 		caret-transparent
+		selection:bg-transparent selection:text-inherit
 
 	}
 
@@ -143,6 +144,7 @@
 
 	.boton {
 		@apply w-48 h-10 px-12 py-2 rounded-md bg-blue-600 text-white font-medium text-sm shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111111] transition-colors
+		
 	}
 }
 
