@@ -95,17 +95,17 @@ class SudokuGenerador
 
     private function esSeguro(int $fila, int $col, int $num): bool
     {
-        // Fila
+        // recorre la fila
         for ($x = 0; $x < 4; $x++) {
             if ($this->grid[$fila][$x] === $num) return false;
         }
 
-        // Columna
+        // recorre la columna
         for ($x = 0; $x < 4; $x++) {
             if ($this->grid[$x][$col] === $num) return false;
         }
 
-        // Caja 3x3
+        // recorre la caja 2x2
         $filaInicio = $fila - $fila % 2;
         $colInicio = $col - $col % 2;
 
@@ -129,7 +129,7 @@ class SudokuGenerador
         $count = $cantidad[$dificultad];
 
         while ($count > 0) {
-            $cellId = rand(0, 15);   // 0..80
+            $cellId = rand(0, 15);
             $fila   = intdiv($cellId, 4);
             $col    = $cellId % 4;
 
