@@ -6,7 +6,6 @@ const Celda = ({ numero, esPista, cambioNumero }) => {
         const valor = e.target.value;
         const ultimo = valor.slice(-1);
 
-        console.log(ultimo);
         if (ultimo === "") {
             cambioNumero(0); // vacío  0
         } else if (ultimo >= "1" && ultimo <= "4") {

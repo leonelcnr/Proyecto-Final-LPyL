@@ -1,4 +1,4 @@
-// components/auth/AuthLayout.tsx
+
 
 const AuthLayout = ({ children }) => {
     return (

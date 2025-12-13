@@ -28,7 +28,6 @@ const formatearTiempo = (tiempoMs) => {
 
 const formatearFecha = (fecha) => {
     if (!fecha) return "";
-    // console.log(fecha + "fecha");
     const iso = fecha.replace(" ", "T");
     const tiempo = new Date(iso);
     const formateador = new Intl.DateTimeFormat('es-AR', {
@@ -37,7 +36,7 @@ const formatearFecha = (fecha) => {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false // Use 24-hour format
+        hour12: false // formato 24 horas
     });
 
     return formateador.format(tiempo);
@@ -70,8 +69,6 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
                 {partidas.map((partida) => {
                     const usuario = partida.usuario == undefined ? undefined : partida.usuario;
 
-                    // console.log(partida.posicion !== undefined);
-                    // cambiamos las columnas según si mostramos usuario o no
                     const gridCols = usuario !== undefined
                         ? "grid-cols-[auto,auto,1fr,auto]"
                         : "grid-cols-[auto,1fr,auto]";
@@ -92,7 +89,6 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
                                 </div>
                             )}
 
-                            {/* Dificultad + tiempo */}
                             <div className="flex flex-col">
                                 <div className="flex items-center gap-3">
                                     <span
@@ -114,7 +110,6 @@ const Ranking = ({ partidas, titulo = "Ranking" }) => {
                                 </div>
                             )}
 
-                            {/* Fecha */}
                             <div className="text-xs text-slate-400 text-right self-center">
                                 {formatearFecha(partida.jugada_en)}
                             </div>

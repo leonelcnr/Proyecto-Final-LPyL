@@ -4,7 +4,7 @@ const TarjetaDificultad = ({ dificultad, handleDificultad }) => {
         hover:bg-zinc-700 hover:text-white transition-all duration-800
         group">
             <div className="bg-zinc-700 rounded-t-md p-2 h-1/2">
-                <img className="w-full h-full object-contain" src="src/assets/img/icons8-sudoku.svg" alt="" />
+                <img className="w-full h-full object-contain" src="src/assets/img/icons8-sudoku.svg" alt="imagen sudoku" />
             </div>
             <div className=" flex flex-col gap-2 justify-around items-center text-center h-1/2">
                 <h2 className="text-2xl font-bold text-white uppercase">{dificultad}</h2>

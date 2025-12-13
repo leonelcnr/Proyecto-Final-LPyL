@@ -23,7 +23,6 @@ const Login = () => {
         const formData = new FormData(e.target);
         const datos = Object.fromEntries(formData);
         datos.password = await hashPassword(datos.password);
-        console.log(datos);
 
         fetch("/Peticiones/login.php", {
             method: "POST",
@@ -33,7 +32,6 @@ const Login = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 if (data.ok) {
                     localStorage.setItem('usuario', datos.usuario);
                     navigate('/inicio');
