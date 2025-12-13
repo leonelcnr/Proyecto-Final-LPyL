@@ -7,12 +7,12 @@ const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 
-    async function hashPassword(password) {
-        if (password === '') {
+    async function hashPassword(contraseña) {
+        if (contraseña === '') {
             return '';
         }
         const encoder = new TextEncoder();
-        const data = encoder.encode(password);
+        const data = encoder.encode(contraseña);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
