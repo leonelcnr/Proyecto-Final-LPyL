@@ -178,7 +178,7 @@ const Juego = () => {
                         <form onSubmit={verificarSolucion} className="w-auto flex flex-col items-center gap-6 ">
                             <Tablero tablero={sudoku} cambiarValorCelda={cambiarValorCelda} pistas={pistas} />
                             <Reloj tiempo={tiempo} />
-                            <button type="submit" className="boton disabled:opacity-40 cursor-not-allowed" disabled={sudoku.some(fila => fila.some(celda => celda === 0))}>Terminé</button>
+                            <button type="submit" className="boton disabled:opacity-40 disabled:cursor-not-allowed" disabled={sudoku.some(fila => fila.some(celda => celda === 0))}>Terminé</button>
                         </form>
                     </div>
                 </article>
